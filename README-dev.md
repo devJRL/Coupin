@@ -2,12 +2,10 @@
 
 ## Setup
 
-```bash
-# on Mac OS X
-brew install git-flow
-
-
-```
+  ```bash
+  # on Mac OS X
+  brew install git-flow
+  ```
 
 ## Flow
 
@@ -21,15 +19,15 @@ brew install git-flow
 
    ```bash
    git flow init
-     # Branch name for production releases: [master] main
+     # Branch name for production releases: [main]           (enter)
      # Branch name for "next release" development: [develop] (enter)
 
      # How to name your supporting branch prefixes?
      # Feature branches? [feature/] (enter)
      # Release branches? [release/] (enter)
-     # Hotfix branches? [hotfix/] (enter)
+     # Hotfix branches? [hotfix/]   (enter)
      # Support branches? [support/] (enter)
-     # Version tag prefix? [] tag
+     # Version tag prefix? [] tag   (type & enter)
 
    git status
      # On branch develop
@@ -41,9 +39,8 @@ brew install git-flow
    ```bash
    git flow feature start {type/target}
      # eg.
-     # git flow feature start setting/initialize
-     # git flow feature start front/page/landing
-     # git flow reature start back/api/login
+     # git flow feature start interface/user/login
+     # git flow reature start rest-api/user/login
    ```
 
 4. Push commits to the remote-repo (origin)
@@ -73,9 +70,13 @@ brew install git-flow
    ```bash
    git flow feature finish {type/target}
      # eg.
-     # git flow feature finish setting/initialize
-     # git flow feature finish front/page/landing
-     # git flow reature finish back/api/login
+     # git flow feature finish interface/user/login
+     # git flow reature finish rest-api/user/login
+   ```
+
+   ```bash
+   # Shortcut
+   git flow feature finish `git status | grep "On branch" | cut -c 19-`
    ```
 
 7. Push `develop` branch to the remote-repo (origin)

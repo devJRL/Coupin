@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ROOT &gt; interface" type="JUnit" factoryName="JUnit">
+    <module name="rest-api.api-user.test" />
+    <useClassPathOnly />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="io.coupin.restapi.interfaces.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="io.coupin.restapi.interfaces" />
+    <option name="MAIN_CLASS_NAME" value="io.coupin.restapi.interfaces.RootControllerTest" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="class" />
+    <option name="PARAMETERS" value="" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
