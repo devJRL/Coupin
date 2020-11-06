@@ -15,14 +15,17 @@ public abstract class AbstractControllerTest {
 
   protected MockMvc mockMvc;
 
-  abstract protected Object serveController();
-
   @BeforeEach
-  private void setup() {
+  private void injectMockMvc() {
 
-    mockMvc = MockMvcBuilders.standaloneSetup(serveController())
-                             .addFilter(new CharacterEncodingFilter(StandardCharsets.UTF_8.name(), true))
+    mockMvc = MockMvcBuilders.standaloneSetup( serveController() )
+                             .addFilter( new CharacterEncodingFilter( StandardCharsets.UTF_8.name(), true ) )
                              .build();
+    setupBeforeEach();
   }
+
+  protected abstract Object serveController();
+
+  protected abstract void setupBeforeEach();
 
 }
