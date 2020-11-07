@@ -56,9 +56,12 @@
 - Run `MariaDB:10.5 container`
 
   ```bash
+  cd {your_local_coupin_repository}/coupin-database/mariadb
+
   docker run -d -p 3306:3306 \
-   -e MYSQL_ROOT_PASSWORD=$RANDOM_COUPIN_DB_PASSWORD \
    --name coupin-database-mariadb \
+   -e MYSQL_ROOT_PASSWORD=$RANDOM_COUPIN_DB_PASSWORD \
+   -v custom-conf:/etc/mysql/conf.d \
    mariadb:10.5
   ```
 
@@ -67,7 +70,7 @@
   ```bash
   docker logs --tail 2 coupin-database-mariadb
    # [Note] mysqld: ready for connections.
-   # Version: '10.5.7-MariaDB-1:10.5.7+maria~focal'  socket: '/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
+   # Version: '10.5.7-MariaDB-1:10.5.7+maria~focal' ...
 
   docker container ls | grep coupin
    #  mariadb:10.5    "docker-entrypoint.s…"  (create-time) (up-time)  0.0.0.0:3306->3306/tcp   coupin-database-mariadb
@@ -82,5 +85,15 @@
 
   ![example](https://user-images.githubusercontent.com/48089867/98438466-cbb7d700-212d-11eb-991a-ff8ed7fd60bc.png)
 
-- Done!
+- Stop container
 
+  ```bash
+  docker stop coupin-database-mariadb
+  ```
+
+- Remove container
+
+  ```bash
+  # Must be stopped first
+  docker stop coupin-database-mariadb
+  ```

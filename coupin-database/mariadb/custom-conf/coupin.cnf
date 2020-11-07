@@ -1,0 +1,21 @@
+[client]
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+character-set-server = utf8mb4
+collation-server     = utf8mb4_unicode_ci
+skip-character-set-client-handshake
+
+# 대소문자 구분 해제
+lower_case_file_system = ON
+lower_case_table_names = 1
+
+# 타임존 설정 KST UTC+9
+default-time-zone='+9:00'
+
+# 로그 시간정보를 시스템기준으로 설정
+log_timestamps = SYSTEM
