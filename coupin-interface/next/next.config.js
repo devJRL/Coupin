@@ -2,9 +2,6 @@
 
 const path = require("path");
 
-//typescript
-const withTypescript = require("@zeit/next-typescript");
-
 module.exports = {
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
@@ -12,8 +9,8 @@ module.exports = {
 };
 
 //typescript
-module.exports = withTypescript({
-  webpack(config, options) {
-    return config;
-  },
-});
+// module.exports = withTypescript({
+//   webpack(config, options) {
+//     return config;
+//   },
+// });
