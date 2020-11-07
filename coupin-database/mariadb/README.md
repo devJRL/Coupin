@@ -68,12 +68,15 @@
 - Check container log that has ready for connections.
 
   ```bash
-  docker logs --tail 2 coupin-database-mariadb
-   # [Note] mysqld: ready for connections.
-   # Version: '10.5.7-MariaDB-1:10.5.7+maria~focal' ...
+  docker logs -tf --tail 5 coupin-database-mariadb
+    # ...
+    # [Note] mysqld: ready for connections.
+    # Version: '10.5.7-MariaDB-1:10.5.7+maria~focal' ...
+
+    # Exit to type `ctrl + c`
 
   docker container ls | grep coupin
-   #  mariadb:10.5    "docker-entrypoint.s…"  (create-time) (up-time)  0.0.0.0:3306->3306/tcp   coupin-database-mariadb
+    #  mariadb:10.5    "docker-entrypoint.s…"  (create-time) (up-time)  0.0.0.0:3306->3306/tcp   coupin-database-mariadb
   ```
 
 - Connect to MariaDB Client (like [DBeaver CE](https://dbeaver.io/download/)).
@@ -84,6 +87,10 @@
   ```
 
   ![example](https://user-images.githubusercontent.com/48089867/98438466-cbb7d700-212d-11eb-991a-ff8ed7fd60bc.png)
+
+- Add DDL in private team channel
+
+## Remove container
 
 - Stop container
 
