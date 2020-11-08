@@ -12,8 +12,8 @@ abstract class AbstractServiceTest {
     MockitoAnnotations.initMocks( this );
 
     // Set Mocks with dummy value
-    setMocks();
+    setup();
   }
 
-  protected abstract void setMocks();
+  protected abstract void setup();
 }

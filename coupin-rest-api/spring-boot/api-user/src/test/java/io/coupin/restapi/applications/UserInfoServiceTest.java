@@ -7,36 +7,43 @@ import io.coupin.restapi.domains.UserInfoRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @DisplayName( "Application > UserInfoServiceTest" )
+@ExtendWith( MockitoExtension.class )
 class UserInfoServiceTest extends AbstractServiceTest {
+
+  @InjectMocks private UserInfoService userInfoService;
 
   @Mock private UserInfoRepository mockUserInfoRepository;
 
-  private UserInfo inputUserInfo;
+  private UserInfo givenUserInfo;
 
-  private UserInfo outputUserInfo;
+  private UserInfo willUserInfo;
 
   @Override
-  protected void setMocks() {
+  protected void setup() {
 
-    inputUserInfo = UserInfo.builder()
+    givenUserInfo = UserInfo.builder()
                             .userId( "dev-2020" )
                             .userPw( "P@ssword" )
                             .userEmail( "your@email.com" )
                             .build();
 
-    outputUserInfo = UserInfo.builder()
-                             .userNo( 99 )
-                             .userId( inputUserInfo.getUserId() )
-                             .userPw( inputUserInfo.getUserPw() )
-                             .userEmail( inputUserInfo.getUserEmail() )
-                             .build();
+    willUserInfo = UserInfo.builder()
+                           .userNo( 9988 )
+                           .userId( givenUserInfo.getUserId() )
+                           .userPw( givenUserInfo.getUserPw() )
+                           .userEmail( givenUserInfo.getUserEmail() )
+                           .build();
 
-    BDDMockito.given( mockUserInfoRepository.save( inputUserInfo ) )
-              .willReturn( outputUserInfo );
+    // Given
+    BDDMockito.given( mockUserInfoRepository.save( givenUserInfo ) )
+              .willReturn( willUserInfo );
   }
 
   @DisplayName( "Save new user into repository" )
@@ -44,7 +51,14 @@ class UserInfoServiceTest extends AbstractServiceTest {
   @Order( 1 )
   public void insertNewUserTest() {
 
-    assertEquals( mockUserInfoRepository.save( inputUserInfo ).getUserNo(),
-                  outputUserInfo.getUserNo() );
+    // When
+    UserInfo whenUserInfo = userInfoService.insertNewUser( givenUserInfo );
+
+    // Then
+    assertEquals( whenUserInfo, willUserInfo );
+    assertEquals( whenUserInfo.getUserNo(), willUserInfo.getUserNo() );
+    assertEquals( whenUserInfo.getUserId(), willUserInfo.getUserId() );
+    assertEquals( whenUserInfo.getUserPw(), willUserInfo.getUserPw() );
+    assertEquals( whenUserInfo.getUserEmail(), willUserInfo.getUserEmail() );
   }
 }
