@@ -60,6 +60,7 @@
     -e MYSQL_ROOT_PASSWORD=$RANDOM_COUPIN_DB_PASSWORD \
     -p 3306:3306 \
     --name coupin-mysql \
+    --cap-add SYS_NICE \
     dev2sponge/coupin-database-mysql
 
    docker logs -tf --tail 10 coupin-mysql
@@ -67,6 +68,8 @@
    docker container ls | grep coupin
     #  dev2sponge/coupin-database-mysql latest  "docker-entrypoint.s…"  (create-time) (up-time)  0.0.0.0:3306->3306/tcp   coupin-mysql
    ```
+
+   see [`--cap-add` option](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) to avoid mysql 8 bug [`mysql 8.0.11 docker: mbind: Operation not permitted`](https://github.com/docker-library/mysql/issues/422#issuecomment-697592885)
 
 - Check container log that has ready for connections.
 

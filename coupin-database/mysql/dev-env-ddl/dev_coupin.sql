@@ -12,14 +12,11 @@ CREATE DATABASE `coupin`
 
 
 
--- | USER
+-- | USER (ONLY ALLOW FROM BRIDGE - "Gateway": "172.17.0.1")
 USE `mysql`;
-CREATE USER IF NOT EXISTS 'dev_coupin'@'192.168.1.%' IDENTIFIED BY 'dev_coupin' PASSWORD EXPIRE NEVER; 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE `coupin`.* TO 'dev_coupin'@'192.168.1.%';
-SHOW GRANTS FOR 'dev_coupin'@'192.168.1.%';
-FLUSH PRIVILEGES;
-    -- TODO > PW HASH - https://mariadb.com/kb/en/create-user/#identified-by-password-password_hash
-    -- TODO > TLS     - https://mariadb.com/kb/en/create-user/#tls-options
+CREATE USER IF NOT EXISTS 'dev_coupin'@'172.17.0.%' IDENTIFIED BY 'dev_coupin' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE `coupin`.* TO 'dev_coupin'@'172.17.0.%';
+SHOW GRANTS FOR 'dev_coupin'@'172.17.0.%';
 
 
 
