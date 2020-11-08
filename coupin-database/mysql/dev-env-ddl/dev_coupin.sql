@@ -8,18 +8,7 @@ SHOW VARIABLES WHERE variable_name LIKE '%case%';
 -- | Schema
 CREATE DATABASE `coupin`
   DEFAULT CHARACTER SET = 'utf8mb4'
-  DEFAULT COLLATE = 'utf8mb4_unicode_ci'
-  COMMENT 'Coupin Database';
-
-SELECT
-      schema_name,
-      schema_comment,
-      default_character_set_name,
-      default_collation_name
-  FROM
-      INFORMATION_SCHEMA.SCHEMATA
- WHERE
-      schema_name = 'coupin';
+  DEFAULT COLLATE = 'utf8mb4_unicode_ci';
 
 
 

@@ -1,0 +1,21 @@
+FROM mysql:8
+MAINTAINER devJRL(SP.ON.GE) <dev2sponge@gmail.com>
+
+ENV lower-case-file-system ON
+ENV lower-case-table-name  1
+
+ADD ./custom-conf /etc/mysql/conf.d
+ADD ./dev-env-ddl /docker-entrypoint-initdb.d
+
+RUN chmod a-w /etc/mysql/conf.d/*
+
+WORKDIR /
+RUN ./entrypoint.sh
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+EXPOSE 3306 33060
+
+CMD ["mysqld"]
+
+# FINISH
+ONBUILD RUN ">> Docker image 'coupin-databse-mariadb' build has done"
