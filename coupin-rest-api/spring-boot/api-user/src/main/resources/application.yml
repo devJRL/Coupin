@@ -12,6 +12,8 @@ spring:
     hibernate:
       format_sql: true
       ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
   logging:
     level:
@@ -22,3 +24,4 @@ spring:
             descriptor:
               sql:
                 BasicBinder: TRACE
+

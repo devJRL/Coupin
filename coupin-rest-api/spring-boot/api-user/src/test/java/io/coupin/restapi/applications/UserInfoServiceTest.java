@@ -26,7 +26,7 @@ class UserInfoServiceTest extends AbstractServiceTest {
   private UserInfo willUserInfo;
 
   @Override
-  protected void setup() {
+  protected void setupBeforeEach() {
 
     givenUserInfo = UserInfo.builder()
                             .userId( "dev-2020" )

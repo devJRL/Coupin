@@ -5,12 +5,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import io.coupin.restapi.applications.UserInfoService;
 import io.coupin.restapi.domains.UserInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -19,9 +22,13 @@ import org.springframework.util.MultiValueMap;
 @TestMethodOrder( OrderAnnotation.class )
 class UnsignedUserControllerTest extends AbstractControllerTest {
 
-  private UserInfo userInfo;
-
   @Autowired private UnsignedUserController controller;
+
+  @Mock private UserInfoService userInfoService;
+
+  private UserInfo givenUserInfo;
+
+  private UserInfo willUserInfo;
 
   @Override
   protected Object serveController() { return controller; }
@@ -29,12 +36,22 @@ class UnsignedUserControllerTest extends AbstractControllerTest {
   @Override
   protected void setupBeforeEach() {
 
-    userInfo = UserInfo.builder()
-                       .userNo( 99 )
-                       .userId( "dev-2020" )
-                       .userPw( "P@ssword" )
-                       .userEmail( "your@email.com" )
-                       .build();
+    givenUserInfo = UserInfo.builder()
+                            .userId( "dev-2020" )
+                            .userPw( "P@ssword" )
+                            .userEmail( "your@email.com" )
+                            .build();
+
+    willUserInfo = UserInfo.builder()
+                           .userNo( 9988 )
+                           .userId( givenUserInfo.getUserId() )
+                           .userPw( givenUserInfo.getUserPw() )
+                           .userEmail( givenUserInfo.getUserEmail() )
+                           .build();
+
+    // Given
+    BDDMockito.given( userInfoService.insertNewUser( givenUserInfo ) )
+              .willReturn( willUserInfo );
   }
 
   @DisplayName( "register > [POST] '/users/{id}'" )
@@ -43,14 +60,14 @@ class UnsignedUserControllerTest extends AbstractControllerTest {
   public void registerNewUserTest() throws Exception {
 
     MultiValueMap<String, String> payload = new LinkedMultiValueMap<>();
-    payload.add( "userPw", userInfo.getUserPw() );
-    payload.add( "userEmail", userInfo.getUserEmail() );
+    payload.add( "userPw", givenUserInfo.getUserPw() );
+    payload.add( "userEmail", givenUserInfo.getUserEmail() );
 
-    mockMvc.perform( post( "/users/" + userInfo.getUserId() ).params( payload ) )
+    mockMvc.perform( post( "/users/" + givenUserInfo.getUserId() ).params( payload ) )
            .andExpect( status().isCreated() )
-           .andExpect( content().string( containsString( "\"userNo\":" + userInfo.getUserNo() ) ) )
-           .andExpect( content().string( containsString( "\"userId\":\"" + userInfo.getUserId() + "\"" ) ) )
-           .andExpect( content().string( containsString( "\"userEmail\":\"" + userInfo.getUserEmail() + "\"" ) ) );
+           .andExpect( content().string( containsString( "\"userNo\":" + willUserInfo.getUserNo() ) ) )
+           .andExpect( content().string( containsString( "\"userId\":\"" + willUserInfo.getUserId() + "\"" ) ) )
+           .andExpect( content().string( containsString( "\"userEmail\":\"" + willUserInfo.getUserEmail() + "\"" ) ) );
   }
 
 }
